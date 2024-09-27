@@ -1,0 +1,130 @@
+package Hangman;
+
+import java.util.ArrayList;
+import java.util.Random;
+import java.util.Scanner;
+import java.io.*;
+
+public class Hangman {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        Random rand = new Random();
+
+        ArrayList<String> easy = new ArrayList<>();
+        ArrayList<String> medium = new ArrayList<>();
+        ArrayList<String> hard = new ArrayList<>();
+
+        Scanner inFile = null;
+        Scanner inFile2 = null;
+        Scanner inFile3 = null;
+
+        try {
+            inFile = new Scanner(new File("resources/easy.txt"));
+            while (inFile.hasNextLine()) {
+                easy.add(inFile.nextLine());
+            }
+            inFile.close();
+        } catch (FileNotFoundException e){
+            System.out.println("Error : easy.txt not found");
+        }
+
+        try {
+            inFile2 = new Scanner(new File("resources/medium.txt"));
+            while (inFile2.hasNextLine()) {
+                medium.add(inFile2.nextLine());
+            }
+            inFile2.close();
+        } catch (FileNotFoundException e){
+            System.out.println("Error : medium.txt not found");
+        }
+
+        try {
+            inFile3 = new Scanner(new File("resources/hard.txt"));
+            while (inFile3.hasNextLine()) {
+                hard.add(inFile3.nextLine());
+            }
+            inFile3.close();
+        } catch (FileNotFoundException e){
+            System.out.println("Error : hard.txt not found");
+        }
+
+
+
+        String randomWord = "";
+        int mode;
+        do {
+            System.out.println("Select the difficulty level you would like to play: 'easy'(1), 'medium'(2), or 'hard'(3)");
+            mode = scanner.nextInt();
+            scanner.nextLine();
+
+            switch (mode) {
+                case 1:
+                    if (!easy.isEmpty()){
+                        randomWord = easy.get(rand.nextInt(easy.size()));
+                    } else {
+                        System.out.println("No words available in easy.txt");
+                    }
+                    break;
+
+                case 2:
+                    if (!medium.isEmpty()) {
+                        randomWord = medium.get(rand.nextInt(medium.size()));
+                    } else {
+                        System.out.println("No words available in medium.txt");
+                    }
+                    break;
+
+                case 3:
+                    if (!hard.isEmpty()) {
+                        randomWord = hard.get(rand.nextInt(hard.size()));
+                    } else {
+                        System.out.println("No words available in hard.txt");
+                    }
+                    break;
+                default:
+                    System.out.println("Please select a option and try again!");
+            }
+        } while (mode < 1 || mode > 3 || randomWord.isEmpty());
+
+        char[] puzzle = new char[randomWord.length()];
+
+        for (int i = 0; i < randomWord.length(); i++) {
+            puzzle[i] = '*';
+        }
+        int playerMisses = 0;
+
+        while (new String(puzzle).contains("*")) {
+            System.out.println("(Guess) Enter a letter in word " + new String(puzzle) + ">");
+            String playerInput = scanner.nextLine();
+
+            if (playerInput == null | playerInput.isEmpty()) continue;
+            char guess = playerInput.charAt(0);
+
+            if (new String(puzzle).indexOf(guess) >= 0) {
+                System.out.println(guess + " is already in the word");
+                continue;
+            }
+
+            boolean correct = false;
+
+            for (int i = 0; i < randomWord.length(); i++) {
+                if (randomWord.charAt(i) == guess) {
+                    puzzle[i] = guess;
+                    correct = true;
+                }
+            }
+
+            if (!correct) {
+                System.out.println(guess + "is not in the word");
+                playerMisses++;
+            }
+
+        }
+
+        System.out.println("The word is " + randomWord + ". You missed " + playerMisses + "time. ");
+
+        scanner.close();
+        System.out.println("Game Over. Better luck next time!");
+
+    }
+}
