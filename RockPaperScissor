@@ -1,27 +1,48 @@
-package RockPaperScissor;
-import java.util.Random;
 import java.util.Scanner;
-// doing all coding
-//once done merge into development from DLC
-//then merge development into Score
-//then checkout score and do all your commits for lab 6 here
-//finally merge score into development
-
+import java.util.Random;
 public class RockPaperScissor {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         Random rand = new Random();
 
-        int computer = rand.nextInt(3);
+        int userScore =0;
+        int computerScore=0;
 
-        System.out.println("Enter scissor(0), rock(1), paper(2), lizard(3), spock(4): ");
-        int user = scanner.nextInt();
+        while (true){
+            int computer = rand.nextInt(5);
+            System.out.println("Enter scissor(0), rock(1), paper(2), lizard(3), spock(4) or quit(5): ");
+            int user = scanner.nextInt();
 
-        System.out.println("The Computer is ");
+            System.out.println("The Computer is: ");
 
-        switch (computer) {
+            switch(computer) {
+                case 0:
+                    System.out.println("Scissor");
+                    break;
+
+                case 1:
+                    System.out.println("rock");
+                    break;
+
+                case 2:
+                    System.out.println("paper");
+                    break;
+
+                case 3:
+                    System.out.println("lizard");
+                    break;
+
+                case 4:
+                    System.out.println("spock");
+                    break;
+
+            }
+
+            System.out.println("You are: ");
+
+        switch(user) {
             case 0:
-                System.out.println("Scissor");
+                System.out.println("scissor");
                 break;
 
             case 1:
@@ -39,50 +60,31 @@ public class RockPaperScissor {
             case 4:
                 System.out.println("spock");
                 break;
-        }
 
-        System.out.println("You are ");
-        switch (user) {
-            case 0:
-                System.out.println("scissor");
-                break;
-
-            case 1:
-                System.out.println("rock");
-                break;
-
-            case 2:
-                System.out.println("paper");
-                break;
-
-            case 3:
-                System.out.println("Lizard");
-                break;
-
-            case 4:
-                System.out.println("spock");
-                break;
+            case 5:
+                System.out.println("Thank you for playing the game!");
+                scanner.close();
+                return;
 
             default:
-                System.out.println("Invalid Number!. Please enter 0, 1, 2, 3, or 4");
-                return;
+                System.out.println("Invalid Number!. Please enter 0, 1, 2, 3 or 4");
+                continue;
         }
 
         if (computer == user) {
-            System.out.println("The game is draw.");
+            System.out.println("The game is draw!");
         } else {
             boolean win = (user == 0 && (computer == 2 || computer == 3)) || (user == 1 && (computer == 0 || computer == 3)) || (user == 2 && (computer == 1 || computer == 4)) || (user==3 && (computer ==2 || computer==4)) || (user ==4 && (computer ==0 || computer ==1));
             if (win) {
                 System.out.println("You won!");
+                userScore++;
             } else {
                 System.out.println("You lose!");
+                computerScore++;
             }
-
         }
-        scanner.close();
+        // printing a userscore and computer score
+        System.out.println("Your Score: " + userScore + "| Computer : " + computerScore);
+        }
     }
 }
-
-
-
-
