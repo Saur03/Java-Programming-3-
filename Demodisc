@@ -1,0 +1,52 @@
+package com.example.demodiscstarter;
+
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+
+import java.io.IOException;
+import java.net.URISyntaxException;
+
+public class DemoDisc extends Application {
+    @Override
+    public void start(Stage primaryStage) throws IOException, URISyntaxException {
+        BorderPane pane = new BorderPane();
+        HBox list1 = new HBox();
+        HBox list2 = new HBox();
+        VBox lists = new VBox();
+        // System.out.println(new File("/images/1.png").toURI().toString());
+        ImageView game1 = new ImageView(new Image(DemoDisc.class.getResourceAsStream("images/1.png")));
+        //We use getResourceAsStream() to access the image using the clas
+        game1.setFitWidth(333);
+        game1.setFitHeight(333);
+        ImageView game2 = new ImageView(new Image(getClass().getResourceAsStream("images/2.png")));
+        game2.setFitWidth(333);
+        game2.setFitHeight(333);
+        ImageView game3 = new ImageView(new Image(getClass().getResourceAsStream("images/3.png")));
+        game3.setFitWidth(333);
+        game3.setFitHeight(333);
+        ImageView game4 = new ImageView(new Image(getClass().getResourceAsStream("images/4.png")));
+        game4.setFitWidth(333);
+        game4.setFitHeight(333);
+        ImageView game5 = new ImageView(new Image(getClass().getResourceAsStream("images/5.png")));
+        game5.setFitWidth(333);
+        game5.setFitHeight(333);
+        list1.getChildren().addAll(game1, game2, game3);
+        list2.getChildren().addAll(game4, game5);
+        lists.getChildren().addAll(list1, list2);
+        pane.setCenter(lists);
+        Scene scene = new Scene(pane, 1000, 667);
+        primaryStage.setScene(scene);
+        primaryStage.setTitle("Game Collection");
+        primaryStage.show();
+    }
+
+    public static void main(String[] args) {
+        launch();
+    }
+}
